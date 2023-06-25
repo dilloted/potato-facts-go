@@ -21,7 +21,7 @@ jobs:
       - name: Login to Docker Hub and Artifactory
         run: |
           docker login -u '${{ secrets.DOCKER_HUB_USER }}'  -p '${{ secrets.DOCKER_HUB_PASS }}'
-          docker login -u '${{ secrets.ARTIFACTORY_USER }}' -p '${{ secrets.ARTIFACTORY_TOKEN }}' armory-docker-local.jfrog.io
+          # docker login -u '${{ secrets.ARTIFACTORY_USER }}' -p '${{ secrets.ARTIFACTORY_TOKEN }}' armory-docker-local.jfrog.io
         shell: bash
 
       - name: Setup Go environment
@@ -34,5 +34,6 @@ jobs:
           REGISTRY: index.docker.io
           REGISTRY_ORG: armory
           VERSION: ${{ github.event.release.tag_name }}
-        run: |
+        run: 
+          make version
           make build-ui build-linux docker push
